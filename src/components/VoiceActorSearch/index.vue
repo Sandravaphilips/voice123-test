@@ -28,21 +28,28 @@ export default {
       query: "",
       results: [],
       loading: true,
-      pages: 0,
-      pageNumber: 0,
+      pages: 1,
+      pageNumber: 1,
     };
   },
   watch: {
     query(newValue, oldValue) {
+      // Regardless of the number of pages,
+      // if the query changes, we want pages to be 1
+
+      // To prevent fetchResults from executing twice,
+      // only call fetchResults here when pageNumber is 1
+
       this.pages = 1;
-      this.pageNumber = 1;
+      if (this.pageNumber === 1) this.fetchResults();
+      else this.pageNumber = 1;
     },
     pageNumber(newValue, oldValue) {
       this.fetchResults(newValue > oldValue);
     },
   },
   methods: {
-    async fetchResults(increasePages) {
+    async fetchResults(increasePages = true) {
       this.loading = true;
       const encodedUrl = encodeURIComponent(this.query);
       const response = await fetch(
@@ -52,9 +59,11 @@ export default {
       if (response.ok) {
         const results = await response.json();
         this.results = this.addHighlights(results.providers);
-        this.loading = false;
+
+        // Only show pagination if the number of results is equal to or more than 10
+        // You can test pagination searching 'sample'
         if (increasePages && results.providers.length >= 10) this.pages += 1;
-        console.log(this.pages);
+        this.loading = false;
       } else {
         this.loading = false;
         console.log("HTTP-Error: " + response.status);
@@ -64,6 +73,8 @@ export default {
       this.query = query;
     },
     addHighlights(arr) {
+      // For each actor, add the relevant highlights
+
       return arr.map((actor) => {
         let highlight = this.findQueryText(actor);
         highlight = highlight ? this.markQuery(highlight, this.query) : "";
@@ -72,6 +83,9 @@ export default {
       });
     },
     findQueryText(obj) {
+      // We're looping through each actor obj to find the first detail that has the query
+      // and returning that whole string
+
       const actorDetails = { ...obj };
       delete actorDetails.service_id;
 
