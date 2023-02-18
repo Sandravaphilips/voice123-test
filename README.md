@@ -1,6 +1,7 @@
 # voice123-test
 
 An app that helps you find professional voice actors for any use case.
+[Deployed link](https://glittery-dodol-a72958.netlify.app/)
 
 ## Application Setup Guide
 
@@ -24,22 +25,6 @@ npm run build
 
 ```sh
 npm run test:unit
-```
-
-### Run End-to-End Tests with [Cypress](https://www.cypress.io/)
-
-```sh
-npm run test:e2e:dev
-```
-
-This runs the end-to-end tests against the Vite development server.
-It is much faster than the production build.
-
-But it's still recommended to test the production build with `test:e2e` before deploying (e.g. in CI environments):
-
-```sh
-npm run build
-npm run test:e2e
 ```
 
 ## Worklog
