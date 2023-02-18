@@ -6,30 +6,30 @@
       <div v-for="actor in results">
         <SearchResultCard :actor="actor" />
       </div>
+    </div>
 
-      <div class="pagination">
-        <div
-          class="pag-controls"
-          v-show="pageNumber - 1"
-          @click="$emit('update-page-number', pageNumber - 1)"
+    <div v-if="pages > 1" class="pagination">
+      <div
+        class="pag-controls"
+        v-show="pageNumber - 1"
+        @click="$emit('update-page-number', pageNumber - 1)"
+      >
+        Previous
+      </div>
+      <div v-for="num in numberOfPages">
+        <span
+          :class="`page ${pageNumber === num ? 'active' : ''}`"
+          role="button"
+          @click="$emit('update-page-number', num)"
+          >{{ num }}</span
         >
-          Previous
-        </div>
-        <div v-for="num in numberOfPages">
-          <span
-            :class="`page ${pageNumber === num ? 'active' : ''}`"
-            role="button"
-            @click="$emit('update-page-number', num)"
-            >{{ num }}</span
-          >
-        </div>
-        <div
-          class="pag-controls"
-          v-show="pageNumber < pages"
-          @click="$emit('update-page-number', pageNumber + 1)"
-        >
-          Next
-        </div>
+      </div>
+      <div
+        class="pag-controls"
+        v-show="pageNumber < pages"
+        @click="$emit('update-page-number', pageNumber + 1)"
+      >
+        Next
       </div>
     </div>
   </div>
@@ -45,16 +45,17 @@ export default {
   emits: ["update-page-number"],
   computed: {
     numberOfPages() {
+      // If there are more pages, only 10 page numbers should be displayed
+      // else the page numbers from 1 to this.pages will be shown
+
       const pageLength = this.pages > 10 ? 10 : this.pages;
       const extraPages = this.pages > 10 ? this.pages - 10 : 1;
 
       return Array.from({ length: pageLength }, (_, i) => i + extraPages);
     },
   },
-  methods: {},
 };
 </script>
-
 
 <style>
 .pagination {
