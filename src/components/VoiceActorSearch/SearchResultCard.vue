@@ -14,7 +14,7 @@
         >
       </h3>
       <div v-html="actor.highlight"></div>
-      <audio controls :src="actor.relevant_sample.file">
+      <audio v-show="actor.relevant_sample?.file" controls :src="actor.relevant_sample.file">
         <a :href="actor.relevant_sample.file">Download audio</a>
       </audio>
     </div>
@@ -45,11 +45,6 @@ export default {
     audioUrl() {
       return encodeURIComponent(this.actor.relevant_sample.file);
     },
-  },
-  methods: {
-    // findQueryText(query) {
-    //   if {}
-    // }
   },
 };
 </script>

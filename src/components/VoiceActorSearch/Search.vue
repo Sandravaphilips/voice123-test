@@ -5,7 +5,7 @@
       placeholder="Find voice actors with any keyword..."
       id="voice-search"
       v-model="q"
-      minlength="3"
+      minlength="2"
     />
     <button type="submit" class="submit-search">Search</button>
   </form>
@@ -20,11 +20,6 @@ export default {
     };
   },
   emits: ["update-query"],
-  methods: {
-    updateQuery() {
-      console.log(this.q);
-    },
-  },
 };
 </script>
 

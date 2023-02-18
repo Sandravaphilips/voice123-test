@@ -7,7 +7,3 @@ import VoiceActorSearch from "./components/VoiceActorSearch/index.vue";
     <VoiceActorSearch />
   </div>
 </template>
-
-<style scoped>
-
-</style>
